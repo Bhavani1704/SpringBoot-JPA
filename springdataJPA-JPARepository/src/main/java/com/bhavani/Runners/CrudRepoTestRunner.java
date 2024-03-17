@@ -8,58 +8,59 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.bhavani.entity.Customer;
-import com.bhavani.service.CustomerService;
+import com.bhavani.repository.CustomerRepo;
+
 
 @Component
 public class CrudRepoTestRunner implements CommandLineRunner {
 
 	@Autowired
-	private CustomerService custService;
+	private CustomerRepo custRepo;
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*
-		 * try { String
-		 * resultMsg=custService.deleteCustomersbyIdsBatch(List.of(7,8,2,9));
-		 * 
-		 * System.out.println(resultMsg); } catch(Exception e) { e.printStackTrace(); }
-		 */
-		/*
-		 * try { Customer cust = new Customer(); cust.setCname("raj");
-		 * cust.setCadd("ndl"); List<Customer> list =
-		 * custService.showCustomersByExampleData(cust, true, "billAmt");
-		 * list.forEach(n->System.out.println(n)); } catch(Exception e) {
-		 * e.printStackTrace(); }
-		 */
-		try
-		{
-			Customer cust = custService.showCustomerById(3);
-			System.out.println(cust);
-			System.out.println(cust.getBillAmt());
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 		
-		System.out.println("----------");
-		try
-		{
-			Optional<Customer> opt =custService.fetchCustomerById(20);
-			if(opt.isPresent())
-			{
-				System.out.println("record is::"+opt.get());
-			}
-			else
-			{
-				System.out.println("record not found");
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-
+		/*
+		 * List<Customer> custList = custRepo.findByCnameEquals("raj");
+		 * custList.forEach(n->System.out.println(n));
+		 * 
+		 * System.out.println("------------");
+		 * 
+		 * custRepo.findByCnameIs("suchi").forEach(n->System.out.println(n));
+		 * 
+		 * System.out.println("----------");
+		 * 
+		 * custRepo.findByCname("bhav").forEach(n->System.out.println(n));
+		 */
+		
+		/*
+		 * System.out.println("---------");
+		 * 
+		 * custRepo.findByCnameStartingWith("r").forEach(n->System.out.println(n));
+		 * 
+		 * 
+		 * System.out.println("------");
+		 * 
+		 * custRepo.findByCnameEndingWith("y").forEach(n->System.out.println(n));
+		 * 
+		 * System.out.println("------");
+		 * 
+		 * custRepo.findByCnameContaining("a").forEach(n->System.out.println(n));
+		 */
+		
+		/*
+		 * System.out.println("---------"); 
+		 * custRepo.findBybillAmtBetween(2000.0,
+		 * 15000.0).forEach(n->System.out.println(n));
+		 */
+		
+		 System.out.println("---------"); 
+			/*
+			 * custRepo.findBybillAmtGreaterThanEqualAndbillAmtLessThanEqual(5000.0,
+			 * 20000.0).forEach(n->System.out.println(n));
+			 * 
+			 */
+		 custRepo.findByCaddInOrCnameLikeIgnoreCase(List.of("knl","ndl"), "r%").forEach(n->System.out.println(n));
 	}
-
+	
 }
